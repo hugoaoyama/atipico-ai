@@ -1,0 +1,61 @@
+<div class="dashboard-container" style="padding: 32px; background: #f4f6f9; min-height: 100vh;">
+  <header style="margin-bottom: 32px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <h1 style="color: #333; margin: 0; font-size: 24px;">Bem-vindo(a), {{ userName() }}!</h1>
+      <p style="color: #666; margin: 4px 0 0 0;">Painel de controle central do AtípicoAI</p>
+    </div>
+  </header>
+
+  <!-- Grade de Atalhos / Cards -->
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+    
+    <!-- Card de Documentos -->
+    <p-card header="Documentos e Laudos" [style]="{ height: '100%' }">
+      <div class="card-body">
+        <p style="color: #555; font-size: 14px; margin-bottom: 20px;">
+            Gerencie exames, laudos e receitas em PDF. Visualize resumos automáticos gerados por IA e faça novos uploads integrados ao Google Drive.
+        </p>
+      </div>
+      <div class="card-footer-action">
+          <button pButton label="Acessar Documentos" icon="pi pi-file-pdf" (click)="irParaDocumentos()"></button>
+      </div>
+    </p-card>
+
+    <!-- Card de Pacientes (Próxima etapa) -->
+    <p-card header="Pacientes / Filhos" [style]="{ height: '100%' }">
+        <div class="card-body">
+          <p style="color: #555; font-size: 14px; margin-bottom: 20px;">
+            Cadastre e gerencie perfis, acompanhe CIDs e organize o histórico clínico individualizado.
+          </p>
+        </div>
+        <div class="card-footer-action">
+          <button pButton label="Acessar Pacientes" icon="pi pi-users" (click)="irParaPacientes()"></button>
+        </div>
+    </p-card>
+
+    <!-- Card de Especialistas (Próxima etapa) -->
+    <p-card header="Especialistas" [style]="{ height: '100%' }">
+        <div class="card-body">
+            <p style="color: #555; font-size: 14px; margin-bottom: 20px;">
+            Mantenha a agenda e os contatos dos médicos, terapeutas e especialistas salvos em um só lugar.
+            </p>    
+        </div>
+        <div class="card-footer-action">
+          <button pButton label="Acessar Especialistas" icon="pi pi-user-md" (click)="irParaEspecialistas()"></button>
+        </div>
+    </p-card>
+
+    <!-- Card de Relatório Clínico Consolidado (Novo) -->
+    <p-card header="Relatório Clínico" [style]="{ height: '100%' }">
+        <div class="card-body">
+            <p style="color: #555; font-size: 14px; margin-bottom: 20px;">
+            Visualize na tela e baixe o relatório consolidade com os últimos resumos de cada especialista para levar às consultas.
+            </p>    
+        </div>
+        <div class="card-footer-action">
+          <button pButton label="Ver Relatório" icon="pi pi-file" (click)="irParaRelatorio()"></button>
+        </div>
+    </p-card>
+
+  </div>
+</div>

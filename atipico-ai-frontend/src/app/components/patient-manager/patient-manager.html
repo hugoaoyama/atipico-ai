@@ -1,0 +1,72 @@
+<div class="patient-container">
+  <div class="page-header">
+    <h2>Gestão de Pacientes</h2>
+    <p-button label="Novo Paciente" icon="pi pi-plus" (click)="abrirModalNovo()" />
+  </div>
+
+  <!-- Tabela de Pacientes -->
+  <p-table [value]="patients" [tableStyle]="{ 'min-width': '60rem' }" styleClass="p-datatable-gridlines">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Nome</th>
+        <th>Data de Nascimento</th>
+        <th>CIDs</th>
+        <th>Observações</th>
+        <th style="width: 100px; text-align: center;">Ações</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-patient>
+      <tr>
+        <td>{{ patient.name }}</td>
+        <td>{{ patient.birthDate | date:'dd/MM/yyyy' }}</td>
+        <td>
+          <span *ngFor="let cid of patient.cids" style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; margin-right: 4px; font-size: 0.85rem;">
+            {{ cid }}
+          </span>
+        </td>
+        <td>{{ patient.notes }}</td>
+        <td style="text-align: center;">
+          <p-button icon="pi pi-trash" severity="danger" [text]="true" (click)="excluirPaciente(patient.id)" />
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <!-- Modal de Cadastro -->
+  <p-dialog header="Cadastrar Novo Paciente" [(visible)]="displayModal" [modal]="true" [style]="{ width: '450px' }" [draggable]="false" [resizable]="false">
+    <div class="form-group" style="margin-bottom: 1rem;">
+      <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">
+        Nome da Criança
+        <span style="color: red;">*</span>
+      </label>
+      <input type="text" pInputText [(ngModel)]="novoPaciente.name" placeholder="Ex: Jun Aoyama" style="width: 100%;" />
+    </div>
+
+    <div class="form-group" style="margin-bottom: 1rem;">
+      <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">
+        Data de Nascimento
+        <span style="color: red;">*</span>
+      </label>
+      <input type="date" pInputText [(ngModel)]="novoPaciente.birthDate" style="width: 100%;" />
+    </div>
+
+    <div class="form-group" style="margin-bottom: 1rem;">
+      <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">CIDs (separados por vírgula)</label>
+      <input type="text" pInputText [(ngModel)]="cidsInput" placeholder="Ex: F84.0, F90.0" style="width: 100%;" />
+    </div>
+
+    <div class="form-group" style="margin-bottom: 1.5rem;">
+      <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Observações</label>
+      <textarea [(ngModel)]="novoPaciente.notes" rows="3" placeholder="Informações relevantes..." style="width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px; font-family: inherit;"></textarea>
+    </div>
+
+    <ng-template pTemplate="footer">
+      <p-button label="Cancelar" icon="pi pi-times" severity="secondary" (click)="displayModal = false" />
+      <p-button 
+        label="Salvar" 
+        icon="pi pi-check" 
+        (click)="salvarPaciente()" 
+        [disabled]="!novoPaciente.name || !novoPaciente.birthDate" />
+    </ng-template>
+  </p-dialog>
+</div>

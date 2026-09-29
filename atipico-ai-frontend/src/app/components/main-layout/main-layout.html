@@ -1,0 +1,78 @@
+<!-- Header Padrão do Sistema -->
+<header class="app-header">
+  <div class="header-left">
+    <!-- Botão do Menu Hambúrguer (3 barrinhas) -->
+    <p-button 
+      icon="pi pi-bars" 
+      [text]="true" 
+      severity="secondary" 
+      (click)="sidebarVisible = true" 
+      styleClass="menu-hamburger-btn" />
+    
+    <span class="app-title" (click)="irParaDashboard()">AtípicoAI</span>
+  </div>
+  <!-- Centro (Logo) -->
+  <div class="header-center">
+    <img src="assets/images/logo.jpg" alt="AtípicoAI Logo" class="header-logo" (click)="irParaDashboard()" />
+  </div>
+
+  <div class="header-right">
+    <!-- Aqui podemos colocar o perfil ou botão de sair no futuro -->
+    <span class="user-greeting">Olá, Bem-vindo(a)</span>
+  </div>
+</header>
+
+<!-- Menu Lateral (Sidebar / Drawer) estilo Mobile -->
+<p-drawer [(visible)]="sidebarVisible" [baseZIndex]="1000">
+  <ng-template pTemplate="header">
+    <span class="sidebar-brand">Navegação</span>
+  </ng-template>
+  
+  <div class="sidebar-menu">
+    <a routerLink="/dashboard" (click)="sidebarVisible = false" class="menu-item">
+      <i class="pi pi-home"></i>
+      <span>Dashboard</span>
+    </a>
+    <a routerLink="/documents" (click)="sidebarVisible = false" class="menu-item">
+      <i class="pi pi-file-pdf"></i>
+      <span>Laudos e Exames</span>
+    </a>
+     <a routerLink="/patients" (click)="sidebarVisible = false" class="menu-item">
+      <i class="pi pi-users"></i>
+      <span>Pacientes</span>
+    </a>
+    <a routerLink="/specialists" (click)="sidebarVisible = false" class="menu-item">
+        <i class="pi pi-id-card"></i>
+        <span>Especialistas</span>
+    </a>
+
+    <a routerLink="/reports" (click)="sidebarVisible = false" class="menu-item">
+        <i class="pi pi-file"></i>
+        <span>Relatórios</span>
+    </a>
+
+    <a routerLink="/about" class="menu-item" (click)="sidebarVisible = false">
+        <i class="pi pi-info-circle"></i>
+        <span>Sobre o Aplicativo</span>
+    </a>
+    <!-- Futuros menus podem entrar aqui -->
+    <hr class="menu-divider">
+    <a (click)="fazerLogout()" class="menu-item logout" style="cursor: pointer;">
+        <i class="pi pi-sign-out"></i>
+      <span>Sair</span>
+    </a>
+  </div>
+</p-drawer>
+
+<!-- Conteúdo Dinâmico das Páginas (Dashboard, Documentos, etc.) -->
+<main class="app-content">
+  <router-outlet></router-outlet>
+</main>
+
+<footer class="app-footer">
+  <div class="footer-content">
+    <span class="footer-text">© 2026 AtípicoAI. Todos os direitos reservados.</span>
+    <span class="footer-divider">|</span>
+    <span class="footer-message">Gestão inteligente de laudos e relatórios médicos</span>
+  </div>
+</footer>

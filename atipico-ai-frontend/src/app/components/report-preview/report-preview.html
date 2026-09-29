@@ -1,0 +1,30 @@
+<div class="report-preview-container">
+  <div class="preview-header">
+    <h2>Resumo Clínico Consolidado por Especialidade</h2>
+    <p>Últimos laudos e exames registrados para acompanhamento.</p>
+    
+    <p-button 
+      label="Baixar Relatório em PDF" 
+      icon="pi pi-file-pdf" 
+      severity="danger" 
+      [disabled]="carregando() || resumos().length === 0"
+      (click)="baixarPdf()" />
+  </div>
+
+  @if (carregando()) {
+    <div class="spinner-container">
+      <p-progressSpinner />
+    </div>
+  } @else {
+    <div class="resumos-grid">
+      @for (item of resumos(); track item.specialistName) {
+        <p-card [header]="item.specialistName + ' (' + item.specialty + ')'" styleClass="preview-card">
+          <p class="doc-info"><strong>Documento:</strong> {{ item.documentTitle }} ({{ item.documentDate }})</p>
+          <p class="ai-summary"><strong>Resumo da IA:</strong> {{ item.aiSummary }}</p>
+        </p-card>
+      } @empty {
+        <p class="no-data">Nenhum documento recente encontrado para as especialidades.</p>
+      }
+    </div>
+  }
+</div>

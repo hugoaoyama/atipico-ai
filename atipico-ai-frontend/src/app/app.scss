@@ -1,0 +1,10 @@
+// Exemplo de estrutura de layout global se necessário
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  .app-content {
+    flex: 1; // Faz o conteúdo expandir e empurrar o footer para baixo
+  }
+}

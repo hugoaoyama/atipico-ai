@@ -1,0 +1,27 @@
+::ng-deep .flex-card {
+  height: 100%;
+
+  /* Garante que o container interno do p-card ocupe 100% da altura e seja flexível */
+  .p-card-body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .p-card-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0 !important; // Remove espaçamento padrão indesejado se necessário
+  }
+}
+
+/* Estilo opcional para empurrar o botão totalmente para baixo */
+.card-body {
+  flex-grow: 1;
+}
+
+.card-footer-action {
+  margin-top: auto; // Garante que fique colado na base
+}

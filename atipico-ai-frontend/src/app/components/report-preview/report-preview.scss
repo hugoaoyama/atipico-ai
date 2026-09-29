@@ -1,0 +1,59 @@
+.report-preview-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .preview-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 20px;
+
+    h2 { 
+      color: #1e293b; 
+      margin: 0; 
+    }
+    
+    p { 
+      color: #64748b; 
+      margin: 0; 
+    }
+  }
+
+  .spinner-container {
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+  }
+
+  .resumos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+
+    .preview-card {
+      height: 100%;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+
+      .doc-info { 
+        font-size: 0.9rem; 
+        color: #475569; 
+        margin-bottom: 8px; 
+      }
+      
+      .ai-summary { 
+        font-size: 0.95rem; 
+        color: #1e293b; 
+        line-height: 1.5; 
+      }
+    }
+  }
+
+  .no-data { 
+    text-align: center; 
+    color: #64748b; 
+    grid-column: 1 / -1; 
+    padding: 30px; 
+  }
+}

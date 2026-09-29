@@ -1,0 +1,142 @@
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 64px;
+  padding: 0 20px;
+  background: #e0f2fe; // <-- Fundo azul bebê
+  border-bottom: 1px solid #bae6fd; // <-- Borda sutil combinando com o fundo
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+
+  .header-left,
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1; // Ocupa espaço igual nas pontas para forçar o centro a ficar no meio
+  }
+
+  .header-right {
+    justify-content: flex-end; // Empurra o texto de boas-vindas para a direita
+  }
+
+  .header-center {
+    display: flex;
+    justify-content: center;
+    flex: 1; // Garante que ocupe o espaço central
+
+    .header-logo {
+      height: 38px; // Ajuste a altura ideal para o seu header
+      object-fit: contain;
+      cursor: pointer;
+      transition: opacity 0.2s;
+
+      &:hover {
+        opacity: 0.85;
+      }
+    }
+  }
+
+  .app-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1e293b;
+    cursor: pointer;
+  }
+
+  .user-greeting {
+    font-size: 0.9rem;
+    color: #64748b;
+  }
+}
+
+.sidebar-brand {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #1e293b;
+}
+
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+
+  .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    color: #334155;
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: background 0.2s;
+
+    i {
+      font-size: 1.2rem;
+      color: #3b82f6;
+    }
+
+    &:hover {
+      background: #f1f5f9;
+      color: #2563eb;
+    }
+  }
+
+  .menu-divider {
+    border: none;
+    border-top: 1px solid #e2e8f0;
+    margin: 12px 0;
+  }
+
+  .logout {
+    color: #ef4444;
+    i { color: #ef4444; }
+    &:hover { background: #fee2e2; }
+  }
+}
+
+.app-content {
+  padding: 24px;
+  background: #f8fafc;
+  min-height: calc(100vh - 64px);
+}
+
+.app-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  padding: 0 20px;
+   background: #e0f2fe; // <-- Fundo azul bebê
+  border-bottom: 1px solid #bae6fd; // <-- Borda sutil combinando com o fundo
+  color: #64748b;
+  font-size: 0.85rem;
+  width: 100%;
+
+  .footer-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    text-align: center;
+
+    .footer-text {
+      font-weight: 500;
+      color: #334155;
+    }
+
+    .footer-divider {
+      color: #cbd5e1;
+    }
+
+    .footer-message {
+      color: #64748b;
+      font-style: italic;
+    }
+  }
+}
