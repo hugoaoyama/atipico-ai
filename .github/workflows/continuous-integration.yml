@@ -37,6 +37,7 @@ jobs:
     - name: Docker Push to Docker Hub
       working-directory: ./docker-servicos/backend
       run: 
-        docker tag ${{ secrets.DOCKER_USERNAME}}/backend/atipico_ai_backend:latest ${{ secrets.DOCKER_USERNAME}}/backend/atipico_ai_backend:${{ github.run_id }}
+        docker tag atipico-ai-backend:latest ${{ secrets.DOCKER_USERNAME}}/backend/atipico_ai_backend:latest
+        docker tag atipico-ai-backend:latest ${{ secrets.DOCKER_USERNAME}}/backend/atipico_ai_backend:${{ github.run_id }}
         docker push ${{ secrets.DOCKER_USERNAME}}/backend/atipico_ai_backend:latest
         docker push ${{ secrets.DOCKER_USERNAME}}/backend/atipico_ai_backend:${{ github.run_id }}
