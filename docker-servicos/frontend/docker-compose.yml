@@ -1,0 +1,9 @@
+services:
+  frontend:
+    build:
+      context: ../../atipico-ai-frontend  # Caminho relativo até a raiz do Angular
+      dockerfile: Dockerfile
+    container_name: atipico_ai_frontend
+    ports:
+      - "4200:80"  # Expõe na porta 4200 da sua máquina (mapeada para a porta 80 do Nginx)
+    restart: unless-stopped
