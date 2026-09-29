@@ -26,3 +26,17 @@ jobs:
         java-version: '17'
         cache: maven
  
+    - name: Build with Maven
+      working-directory: ./atipico-ai/atipicoAI
+      run: mvn clean package -DskipTests
+
+    - name: Docker Compose Build
+      working-directory: ./atipico-ai/docker-servicos/backend
+      run: docker compose build
+
+    - name: Docker Push to Docker Hub
+      working-directory: ./atipico-ai/docker-servicos/backend/atipico_ai_backend
+      run: 
+        docker tag ${{ secrets.DOCKER_USERNAME}}/backend/atipico_ai_backend:latest ${{ secrets.DOCKER_USERNAME}}/atipicoai//atipico_ai_backend:${{ github.run_id }}
+        docker push ${{ secrets.DOCKER_USERNAME}}/backend/atipico_ai_backend:latest
+        docker push ${{ secrets.DOCKER_USERNAME}}/backend/atipico_ai_backend:${{ github.run_id }}
