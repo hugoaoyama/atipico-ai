@@ -1,0 +1,12 @@
+services:
+  postgres:
+    image: postgres:17.4
+    container_name: atipico_ai
+    environment:
+      POSTGRES_USER: 
+      POSTGRES_PASSWORD: 
+      POSTGRES_DATABASE: 
+    ports:
+      - "5555:5432"
+    volumes:
+      - ./data:/var/lib/postgresql/data
