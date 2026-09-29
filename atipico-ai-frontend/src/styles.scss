@@ -1,0 +1,10 @@
+/* You can add global styles to this file, and also import other style files */
+/* Importa apenas os ícones do PrimeNG de forma correta */
+@import "primeicons/primeicons.css";
+
+/* Estilos globais básicos da aplicação */
+body {
+  margin: 0;
+  font-family: var(--font-family, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif);
+  background-color: #f8fafc;
+}

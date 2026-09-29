@@ -1,0 +1,217 @@
+
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+<div class="document-container" style="padding: 24px;">
+  <div class="page-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <div>
+      <h2>Gerenciamento de Documentos Clínicos</h2>
+      <p class="subtitle" style="color: #64748b;">Histórico de laudos, exames e receitas com resumos inteligentes por IA.</p>
+    </div>
+    <!-- Botão para abrir o Modal de Upload -->
+    <p-button label="Novo Upload" icon="pi pi-upload" (click)="abrirModalUpload()" />
+  </div>
+
+  <!-- Filtros Avançados -->
+  <div class="filters-card" style="background: #f9f9f9; padding: 16px; border-radius: 8px; margin-bottom: 20px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+    <div>
+      <label style="display: block; font-size: 12px; font-weight: bold; margin-bottom: 4px;">Tipo de Documento</label>
+      <p-select 
+        [options]="documentTypes" 
+        [(ngModel)]="selectedDocumentType" 
+        optionLabel="label" 
+        optionValue="value" 
+        placeholder="Selecione o Tipo">
+      </p-select>
+    </div>
+
+    <div>
+      <label style="display: block; font-size: 12px; font-weight: bold; margin-bottom: 4px;">Data Inicial</label>
+      <input type="date" pInputText [(ngModel)]="startDate" style="padding: 10px; border-radius: 4px; border: 1px solid #ccc;" />
+    </div>
+
+    <div>
+      <label style="display: block; font-size: 12px; font-weight: bold; margin-bottom: 4px;">Data Final</label>
+      <input type="date" pInputText [(ngModel)]="endDate" style="padding: 10px; border-radius: 4px; border: 1px solid #ccc;" />
+    </div>
+
+    <div style="display: flex; gap: 8px; align-self: flex-end;">
+      <button pButton label="Filtrar" icon="pi pi-search" (click)="carregarDocumentos()"></button>
+      <button pButton label="Limpar" icon="pi pi-filter-slash" class="p-button-secondary" (click)="limparFiltros()"></button>
+    </div>
+  </div>
+
+  <!-- Tabela PrimeNG para exibição dos documentos -->
+  <p-table [value]="documents()" [loading]="isLoading()" [paginator]="true" [rows]="5" responsiveLayout="scroll">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Título</th>
+        <th>Especialista</th>
+        <th>Tipo</th>
+        <th>Data</th>
+        <th>Resumo Clínico (IA)</th>
+        <th>Ver no Drive</th>
+        <th>Ações</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-doc>
+      <tr>
+        <td><strong>{{ doc.title }}</strong><br/>
+          <small style="color: gray;">{{ doc.fileName }}</small>
+        </td>
+        <td>{{ doc.specialistName || 'Não informado' }}</td>
+        <td>{{ doc.documentType }}</td>
+        <td style="white-space: nowrap;">{{ doc.documentDate || 'Não informada' }}</td>
+        <td>
+          <p-button 
+            *ngIf="doc.aiSummary; else semResumo" 
+            label="Ver Resumo" 
+            icon="pi pi-sparkles" 
+            [text]="true" 
+            severity="info" 
+            (click)="abrirResumo(doc)">
+          </p-button>
+          <ng-template #semResumo>
+            <span style="color: #94a3b8; font-size: 13px; font-style: italic;">Indisponível</span>
+          </ng-template>
+        </td>
+        <td>
+          <a [href]="doc.googleDriveUrl" target="_blank" pButton label="Ver no Drive" icon="pi pi-external-link" class="p-button-sm p-button-outlined"></a>
+        </td>
+        <td>
+          <p-button 
+            label="Excluir" 
+            icon="pi pi-trash" 
+            severity="danger" 
+            (click)="confirmarExclusao(doc)">
+          </p-button>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="7" style="text-align: center; padding: 20px;">Nenhum documento encontrado com os filtros selecionados.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+ <!-- Modal de Upload de Documento -->
+  <p-dialog 
+    header="Enviar Novo Documento (PDF)" 
+    [(visible)]="displayUploadModal" 
+    [modal]="true" 
+    [style]="{ width: '480px' }" 
+    [draggable]="false" 
+    [resizable]="false">
+    
+    <!-- SELECIONAR PACIENTE -->
+    <div style="margin-bottom: 1rem;">
+      <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">
+        Paciente / Criança
+      <span style="color: red;">*</span>
+     </label>
+      <p-select 
+        [options]="patients" 
+        [(ngModel)]="uploadForm.patientId" 
+        optionLabel="name" 
+        optionValue="id" 
+        placeholder="Selecione o Paciente"
+        style="width: 100%;">
+      </p-select>
+    </div>
+
+    <!-- SELECIONAR ESPECIALISTA -->
+    <div style="margin-bottom: 1rem;">
+      <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">
+        Especialista / Clínica
+        <span style="color: red;">*</span>
+      </label>
+      <p-select 
+        [options]="specialists" 
+        [(ngModel)]="uploadForm.specialistId" 
+        optionLabel="name" 
+        optionValue="id" 
+        placeholder="Selecione o Especialista"
+        style="width: 100%;">
+      </p-select>
+    </div>
+
+    <div style="margin-bottom: 1rem;">
+      <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">
+        Título do Documento
+        <span style="color: red;">*</span>
+      </label>
+      <input type="text" pInputText [(ngModel)]="uploadForm.title" placeholder="Ex: Laudo Neurológico - Dr. João" style="width: 100%;" />
+    </div>
+
+    <div style="margin-bottom: 1rem;">
+      <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">
+        Tipo de Documento
+        <span style="color: red;">*</span>
+      </label>
+      <p-select 
+        [options]="documentTypes.slice(1)" 
+        [(ngModel)]="uploadForm.documentType" 
+        optionLabel="label" 
+        optionValue="value" 
+        placeholder="Selecione o Tipo"
+        style="width: 100%;">
+      </p-select>
+    </div>
+
+    <div style="margin-bottom: 1rem;">
+      <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">
+        Data do Documento
+        <span style="color: red;">*</span>
+      </label>
+      <input type="date" pInputText [(ngModel)]="uploadForm.documentDate" style="width: 100%;" />
+    </div>
+
+    <div style="margin-bottom: 1rem;">
+      <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Data de Expiração</label>
+      <input type="date" pInputText [(ngModel)]="uploadForm.expirationDate" style="width: 100%;" />
+    </div>
+
+    <div style="margin-bottom: 1.5rem;">
+      <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">
+        Selecionar Arquivo PDF
+        <span style="color: red;">*</span>
+      </label>
+      <input type="file" (change)="onFileSelected($event)" accept="application/pdf" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;" />
+    </div>
+
+    <ng-template pTemplate="footer">
+      <p-button label="Cancelar" icon="pi pi-times" severity="secondary" (click)="displayUploadModal = false" />
+      <p-button 
+        label="Enviar" 
+       icon="pi pi-check" 
+       (click)="salvarUpload()" 
+       [disabled]="isUploading || !uploadForm.patientId || !uploadForm.specialistId || !uploadForm.title || !uploadForm.documentType || !uploadForm.documentDate || !selectedFile" />
+    </ng-template>
+  </p-dialog>
+
+  <!-- Modal / Popup para leitura do Resumo Clínico -->
+  <p-dialog 
+    header="Resumo Clínico por IA" 
+    [(visible)]="displayResumoModal" 
+    [modal]="true" 
+    [style]="{ width: '550px' }" 
+    [draggable]="false" 
+    [resizable]="false">
+    
+    <div style="margin-bottom: 15px;" *ngIf="documentoSelecionado">
+      <h3 style="color: #1e293b; margin-bottom: 4px; font-size: 1.1rem;">{{ documentoSelecionado.title }}</h3>
+      <span style="font-size: 0.85rem; color: #64748b;">Tipo: {{ documentoSelecionado.documentType }} | Data: {{ documentoSelecionado.documentDate || 'Não informada' }}</span>
+    </div>
+
+    <hr style="border: none; border-top: 1px solid #e2e8f0; margin-bottom: 15px;">
+
+    <div class="resumo-conteudo" style="background: #f8fafc; padding: 16px; border-radius: 8px; border-left: 4px solid #3b82f6; max-height: 350px; overflow-y: auto;">
+      <p style="white-space: pre-line; line-height: 1.6; color: #334155; font-size: 0.95rem; margin: 0;">
+        {{ resumoAtual }}
+      </p>
+    </div>
+
+    <ng-template pTemplate="footer">
+      <p-button label="Fechar" icon="pi pi-check" (click)="displayResumoModal = false" />
+    </ng-template>
+  </p-dialog>
+</div>

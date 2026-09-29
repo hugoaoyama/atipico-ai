@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ../../atipicoAI      # Caminho relativo da pasta do compose até a raiz do projeto Java
+      dockerfile: Dockerfile        # Nome do arquivo de build dentro daquela pasta
+    container_name: atipico_ai_backend
+    environment:
+      - DB_URL=jdbc:postgresql://host.docker.internal:5555/atipicoai
+      - DB_USERNAME=
+      - DB_PASSWORD=
+      - GOOGLE_CLIENT_ID=
+      - GOOGLE_CLIENT_SECRET=
+      - OPENAI_API_KEY=
+      # Suas outras variáveis (Google, OpenAI, etc.)
+    ports:
+      - "8080:8080"
