@@ -17,6 +17,13 @@ RUN npm install --legacy-peer-deps
 # Copia o restante do código-fonte
 COPY . .
 
+# 1. Declarar o argumento que virá do Docker Compose
+ARG ANGULAR_API_URL
+
+# 2. Criar a pasta de environments caso não exista e injetar a URL
+RUN mkdir -p src/environments && \
+    echo "export const environment = { production: true, apiUrl: '${ANGULAR_API_URL}' };" > src/environments/environment.production.ts
+
 # Executa o build de produção (gera a pasta dist)
 RUN npm run build --configuration=production
 
