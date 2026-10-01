@@ -52,6 +52,18 @@ jobs:
         echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> $GITHUB_ENV
         echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> $GITHUB_ENV
 
+        # --- LOGS PARA VERIFICAÇÃO ---
+        echo "=== VERIFICANDO VALORES CARREGADOS ==="
+        echo "ANGULAR_API_URL: ${{ secrets.ANGULAR_API_URL }}"
+        echo "DB_URL: ${{ secrets.DB_URL }}"
+        echo "DB_USERNAME: ${{ secrets.DB_USERNAME }}"
+        # Para senhas e chaves longas, podemos mostrar se estão vazias ou não (comprimento > 0) para segurança
+        echo "DB_PASSWORD está preenchido: $( [ -n "${{ secrets.DB_PASSWORD }}" ] && echo "SIM" || echo "NÃO" )"
+        echo "GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}"
+        echo "GOOGLE_CLIENT_SECRET está preenchido: $( [ -n "${{ secrets.GOOGLE_CLIENT_SECRET }}" ] && echo "SIM" || echo "NÃO" )"
+        echo "OPENAI_API_KEY está preenchido: $( [ -n "${{ secrets.OPENAI_API_KEY }}" ] && echo "SIM" || echo "NÃO" )"
+        echo "========================================"
+
     # 2. Build unificado (Frontend + Backend) usando o compose de integração
     - name: Docker Compose Build (Integration)
       working-directory: ./docker-servicos/integracao
