@@ -14,7 +14,10 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/**") // Libera todas as rotas sob /api/
-                        .allowedOrigins("http://localhost:4200") // Origem do Angular 20
+                        .allowedOrigins(
+                                "http://localhost:4200",
+                                "http://atipico-frontend-alb-799579755.sa-east-1.elb.amazonaws.com"
+                        ) // Origem do Angular 20
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Métodos HTTP permitidos
                         .allowedHeaders("*")
                         .allowCredentials(true); // Essencial para o cookie JSESSIONID trafegar

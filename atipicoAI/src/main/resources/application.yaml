@@ -1,23 +1,14 @@
+server:
+  forward-headers-strategy: native
+
 spring:
   application:
     name: atipicoAI
 
-  server:
-    forward-headers-strategy: native
-    
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
-
-  management:
-    endpoints:
-      web:
-        exposure:
-          include: health
-    endpoint:
-      health:
-        show-details: never
 
   datasource:
     url: ${DB_URL}
@@ -56,3 +47,12 @@ spring:
       chat:
         options:
           model: gpt-4o-mini
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
