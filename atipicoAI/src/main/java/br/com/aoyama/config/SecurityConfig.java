@@ -30,6 +30,9 @@ public class SecurityConfig {
                         // PERMITE O PREFLIGHT DO CORS (Método OPTIONS) SEM AUTENTICAÇÃO
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
+                        // HEALTH CHECK - SEM LOGIN
+                        .requestMatchers("/actuator/health").permitAll()
+
                         // Rotas públicas de autenticação e login
                         .requestMatchers("/api/v1/auth/**", "/login/**", "/oauth2/**").permitAll()
 

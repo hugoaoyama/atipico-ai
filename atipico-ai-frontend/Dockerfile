@@ -22,6 +22,7 @@ ARG ANGULAR_API_URL
 
 # 2. Criar a pasta de environments caso não exista e injetar a URL
 RUN mkdir -p src/environments && \
+    echo "export const environment = { production: true, apiUrl: '${ANGULAR_API_URL}' };" > src/environments/environment.ts && \
     echo "export const environment = { production: true, apiUrl: '${ANGULAR_API_URL}' };" > src/environments/environment.production.ts
 
 # Executa o build de produção (gera a pasta dist)
