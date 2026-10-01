@@ -2,6 +2,9 @@ spring:
   application:
     name: atipicoAI
 
+  server:
+    forward-headers-strategy: native
+    
   servlet:
     multipart:
       max-file-size: 10MB
