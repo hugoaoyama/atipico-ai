@@ -35,6 +35,6 @@ export class HomeComponent implements OnInit {
 
   // Endpoint exposto pelo Spring Security OAuth2 Client
   loginGoogle(): void {
-    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+    window.location.href = '${environment.apiUrl}/oauth2/authorization/google';
   }
 }

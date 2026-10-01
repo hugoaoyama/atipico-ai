@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment';
 })
 export class ReportService {
   private http = inject(HttpClient);
-  private apiUrl = environment.apiUrl + '/reports';
+  private apiUrl = environment.apiUrl + '/api/v1/reports';
 
   obterPreviewResumos(patientId: number): Observable<SpecialistSummary[]> {
     return this.http.get<SpecialistSummary[]>(`${this.apiUrl}/patient/${patientId}/preview`, {

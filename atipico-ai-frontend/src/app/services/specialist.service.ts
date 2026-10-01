@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
 })
 export class SpecialistService {
   private http = inject(HttpClient);
-  private apiUrl = environment.apiUrl + '/specialists'; // Ajuste o endpoint se necessário conforme seu Controller
+  private apiUrl = environment.apiUrl + '/api/v1/specialists'; // Ajuste o endpoint se necessário conforme seu Controller
 
   listarEspecialistas(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl, { withCredentials: true });
