@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
 })
 export class PatientService {
   private http = inject(HttpClient);
-  private apiUrl = environment.apiUrl + '/api/v1/patients';
+  private apiUrl = environment.apiUrl + '/v1/patients';
 
   listarPacientes(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl, { withCredentials: true });

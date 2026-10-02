@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment';
 })
 export class DocumentService {
   private http = inject(HttpClient);
-  private apiUrl = environment.apiUrl + '/api/v1/documents';
+  private apiUrl = environment.apiUrl + '/v1/documents';
 
   listarDocumentos(
     patientId: number, 

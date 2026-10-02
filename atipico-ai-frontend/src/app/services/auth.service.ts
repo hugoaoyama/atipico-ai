@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
 })
 export class AuthService {
   private http = inject(HttpClient);
-  private apiUrl = environment.apiUrl + '/api/v1/auth'; // Ajuste conforme a URL do seu endpoint
+  private apiUrl = environment.apiUrl + '/v1/auth'; // Ajuste conforme a URL do seu endpoint
 
   // Busca os dados do usuário logado
   getUsuarioLogado(): Observable<any> {
