@@ -23,7 +23,9 @@ public class SecurityConfig {
         this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
     }
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(
+            HttpSecurity http,
+            OAuth2AuthorizationRequestResolver authorizationRequestResolver) throws Exception {
         http
                 // Habilita o CORS para respeitar o WebMvcConfigurer que você criou
                 .cors(Customizer.withDefaults())
@@ -37,7 +39,13 @@ public class SecurityConfig {
                         .requestMatchers("/health", "/actuator/health", "/api/actuator/health").permitAll()
 
                         // Rotas públicas de autenticação e login
-                        .requestMatchers("/api/v1/auth/**", "/login/**", "/oauth2/**").permitAll()
+                        .requestMatchers(
+                                "/api/v1/auth/**",
+                                "/api/oauth2/authorization/**",
+                                "/api/login/oauth2/code/**",
+                                "/login/**",
+                                "/oauth2/**"
+                        ).permitAll()
 
                         // Rotas protegidas (Documentos, Pacientes, etc.)
                         .requestMatchers("/api/v1/documents/**", "/api/v1/patients/**").authenticated()
@@ -45,6 +53,10 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth2 -> oauth2
+                        .authorizationEndpoint(authorization -> authorization
+                                .authorizationRequestResolver(authorizationRequestResolver))
+                        .redirectionEndpoint(redirection -> redirection
+                                .baseUri("/api/login/oauth2/code/*"))
                         .successHandler(customAuthenticationSuccessHandler) // <--- REGISTRA AQUI
                 )
                 .logout(logout -> logout

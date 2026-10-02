@@ -37,7 +37,7 @@ spring:
               - email
               - profile
               - https://www.googleapis.com/auth/drive.file # Escopo para criar e gerenciar apenas os arquivos do app no Drive
-            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            redirect-uri: "{baseUrl}/api/login/oauth2/code/{registrationId}"
         provider:
           google:
             authorization-uri: "https://accounts.google.com/o/oauth2/v2/auth?prompt=consent&access_type=offline"
