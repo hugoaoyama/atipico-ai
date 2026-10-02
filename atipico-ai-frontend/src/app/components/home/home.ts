@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { AuthService } from '../../services/auth.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -35,6 +36,6 @@ export class HomeComponent implements OnInit {
 
   // Endpoint exposto pelo Spring Security OAuth2 Client
   loginGoogle(): void {
-    window.location.href = '${environment.apiUrl}/oauth2/authorization/google';
+    window.location.href = `${environment.apiUrl}/api/oauth2/authorization/google`;
   }
 }

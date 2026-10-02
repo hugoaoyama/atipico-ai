@@ -8,6 +8,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizationRequestResolver;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -31,7 +34,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
                         // HEALTH CHECK - SEM LOGIN
-                        .requestMatchers("/actuator/health").permitAll()
+                        .requestMatchers("/health", "/actuator/health", "/api/actuator/health").permitAll()
 
                         // Rotas públicas de autenticação e login
                         .requestMatchers("/api/v1/auth/**", "/login/**", "/oauth2/**").permitAll()
@@ -55,5 +58,17 @@ public class SecurityConfig {
                 );
 
         return http.build();
+    }
+
+    @Bean
+    public OAuth2AuthorizationRequestResolver authorizationRequestResolver(
+            ClientRegistrationRepository clientRegistrationRepository) {
+
+        // O segundo parâmetro define o prefixo base onde o Spring vai escutar as requisições de OAuth2
+        DefaultOAuth2AuthorizationRequestResolver resolver =
+                new DefaultOAuth2AuthorizationRequestResolver(
+                        clientRegistrationRepository, "/api/oauth2/authorization");
+
+        return resolver;
     }
 }
