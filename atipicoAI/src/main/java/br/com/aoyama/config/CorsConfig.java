@@ -16,7 +16,8 @@ public class CorsConfig {
                 registry.addMapping("/api/**") // Libera todas as rotas sob /api/
                         .allowedOrigins(
                                 "http://localhost:4200",
-                                "http://atipico-frontend-alb-799579755.sa-east-1.elb.amazonaws.com"
+                                "http://atipico-frontend-alb-799579755.sa-east-1.elb.amazonaws.com",
+                                "https://atipicoai.com.br"
                         ) // Origem do Angular 20
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Métodos HTTP permitidos
                         .allowedHeaders("*")

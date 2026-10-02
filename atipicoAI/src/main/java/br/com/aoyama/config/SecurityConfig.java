@@ -42,9 +42,7 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/api/v1/auth/**",
                                 "/api/oauth2/authorization/**",
-                                "/api/login/oauth2/code/**",
-                                "/login/**",
-                                "/oauth2/**"
+                                "/api/login/oauth2/code/**"
                         ).permitAll()
 
                         // Rotas protegidas (Documentos, Pacientes, etc.)
@@ -77,10 +75,7 @@ public class SecurityConfig {
             ClientRegistrationRepository clientRegistrationRepository) {
 
         // O segundo parâmetro define o prefixo base onde o Spring vai escutar as requisições de OAuth2
-        DefaultOAuth2AuthorizationRequestResolver resolver =
-                new DefaultOAuth2AuthorizationRequestResolver(
-                        clientRegistrationRepository, "/api/oauth2/authorization");
-
-        return resolver;
+        return new DefaultOAuth2AuthorizationRequestResolver(
+                clientRegistrationRepository, "/api/oauth2/authorization");
     }
 }
