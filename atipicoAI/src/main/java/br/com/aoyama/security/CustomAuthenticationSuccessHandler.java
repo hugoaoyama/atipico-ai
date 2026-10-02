@@ -23,7 +23,7 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     public CustomAuthenticationSuccessHandler(UserService userService, OAuth2AuthorizedClientService authorizedClientService) {
         this.userService = userService;
         this.authorizedClientService = authorizedClientService;
-        setDefaultTargetUrl("http://localhost:4200/dashboard");
+        setDefaultTargetUrl("http://atipico-frontend-alb-799579755.sa-east-1.elb.amazonaws.com/dashboard");
         setAlwaysUseDefaultTargetUrl(true);
     }
 
